@@ -1,0 +1,16 @@
+{
+  "train_r2": 0.97,
+  "train_mape_pct": 1.514,
+  "holdout_r2": 0.872,
+  "holdout_mape_pct": 2.405,
+  "media_share_of_sales_pct": 32.5,
+  "weekly_media_budget": 92103,
+  "weekly_incremental_sales_current": 253651,
+  "weekly_incremental_sales_optimal": 262543,
+  "weekly_uplift": 8891,
+  "uplift_pct_of_media_sales": 3.5,
+  "annual_uplift": 462357,
+  "true_weekly_uplift": 7225,
+  "true_annual_uplift": 375675,
+  "true_media_share_of_sales_pct": 29.7
+}
