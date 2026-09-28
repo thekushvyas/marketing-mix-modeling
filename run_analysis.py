@@ -133,14 +133,18 @@ def main() -> None:
     ax.legend(frameon=False, ncol=3, loc="upper left", fontsize=9)
     fig.tight_layout(); fig.savefig(IMG / "01_fit.svg"); plt.close(fig)
 
-    # 2. decomposition
+    # 2. decomposition (4-week averages keep the picture readable)
+    blk = np.arange(len(df)) // 4
+    agg = contrib.groupby(blk).mean()
+    y4 = pd.Series(y).groupby(blk).mean()
+    w4 = weeks.groupby(blk).first()
     fig, ax = plt.subplots(figsize=(9, 3.8))
     order = ["baseline"] + CHANNELS
-    ax.stackplot(weeks, *[contrib[c] for c in order], colors=[COLORS[c] for c in order],
+    ax.stackplot(w4, *[agg[c] for c in order], colors=[COLORS[c] for c in order],
                  labels=["Baseline"] + [NAMES[c] for c in CHANNELS], alpha=0.95, lw=0)
-    ax.plot(weeks, y, color="#1d1d1f", lw=0.9, label="Actual")
+    ax.plot(w4, y4, color="#1d1d1f", lw=0.9, label="Actual")
     ax.yaxis.set_major_formatter(money)
-    ax.set_title("What drives sales each week: baseline vs. each channel", loc="left")
+    ax.set_title("What drives sales: baseline vs. each channel (4-week averages)", loc="left")
     ax.legend(frameon=False, ncol=7, fontsize=8, loc="upper left", bbox_to_anchor=(0, 1.0))
     ax.set_ylim(0, y.max() * 1.18)
     fig.tight_layout(); fig.savefig(IMG / "02_decomposition.svg"); plt.close(fig)
